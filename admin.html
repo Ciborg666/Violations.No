@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Панель администратора</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Панель администратора</h1>
+        <ul id="admin-request-list" class="list-request"></ul> 
+    </div>
+
+    <script>
+        // Функция для отображения заявок в панели администратора
+        function displayAdminRequests() {
+            const requests = JSON.parse(localStorage.getItem('requests')) || []; 
+            const adminRequestList = document.getElementById('admin-request-list');
+            adminRequestList.innerHTML = ''; // Очищаем текущий список
+
+            if (requests.length === 0) {
+                adminRequestList.innerHTML = '<li>Нет заявок.</li>'; // Сообщение, если нет заявок
+            } else {
+                requests.forEach((request, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <strong>ГОС номер:</strong> ${request.number} <br>
+                        <strong>Описание:</strong> ${request.description} <br>
+                        <strong>Статус:</strong> <span id="status-${index}">${request.status}</span> <br>
+                        <button onclick="changeStatus(${index})">Сменить статус</button>
+                    `;
+                    adminRequestList.appendChild(listItem);
+                });
+            }
+        }
+
+        // Функция для смены статуса заявки
+        function changeStatus(index) {
+            const requests = JSON.parse(localStorage.getItem('requests')) || [];
+            if (requests[index]) {
+                const currentStatus = requests[index].status;
+                // Предположим, что статусы могут быть "Новая заявка", "В процессе", "Закрыта"
+                const newStatus = currentStatus === "Новая заявка" ? "В процессе" :
+                                  currentStatus === "В процессе" ? "Закрыта" :
+                                  "Новая заявка";
+                requests[index].status = newStatus; // Обновляем статус
+                localStorage.setItem('requests', JSON.stringify(requests)); // Сохраняем обновленный список
+                displayAdminRequests(); // Обновляем отображение
+            }
+        }
+
+        // Отображаем заявки при загрузке страницы
+        displayAdminRequests();
+    </script>
+</body>
+</html>
