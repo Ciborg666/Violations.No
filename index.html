@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Формирование заявки</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Формирование заявки</h1>
+        <form id="form-container">
+            <input type="text" placeholder="ГОС номер автомобиля" name="number" required class="input-form">
+            <textarea name="description" placeholder="Описание нарушения" required class="input-form2"></textarea>
+            <button type="submit" class="button-container">Создать заявление</button>
+        </form>
+        <a href="request.html">Посмотреть заявки</a>
+    </div>
+    <script>
+        document.getElementById('form-container').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const number = document.querySelector('input[name="number"]').value.trim();
+            const description = document.querySelector('textarea[name="description"]').value.trim();
+            const requestData = {
+                number,
+                description,
+                status: "Новая заявка" 
+            };
+
+            // Получение заявок из локального хранилища
+            const requests = JSON.parse(localStorage.getItem('requests')) || []; // Исправлено на requests
+            requests.push(requestData); // Добавляем новую заявку
+
+            // Сохраняем обновленный список заявок
+            localStorage.setItem('requests', JSON.stringify(requests)); // Исправлено на requests
+
+            // Очищаем форму
+            document.getElementById('form-container').reset();
+        });
+    </script>
+</body>
+</html>
