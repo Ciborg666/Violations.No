@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Вход</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Вход</h1>
+        <form id="form-container" >
+            <input type="text" placeholder="Логин" name="login" required class="input-form">
+            <input type="password" placeholder="Пароль" name="password" required class="input-form">
+            <button type="submit" class="button-container">Войти</button>
+        </form>
+        <div class="message" id="message"></div>
+    </div>
+</body>
+</html>
+<script>
+    document.getElementById('form-container').addEventListener('submit', function(event){
+        event.preventDefault();
+        const login = document.querySelector('input[name="login"]').value.trim();
+        const password = document.querySelector('input[name="password"]').value.trim();
+        const userData = localStorage.getItem(login);
+        if(userData){
+            const parsedData = JSON.parse(userData);
+        if (parsedData.password === password) {
+            window.location.href = 'request.html';
+        }
+        else{
+            document.getElementById('massage').textContent = 'Логин или пароль введен неверно';
+        }
+    }
+        else{
+            document.getElementById('massage').textContent = 'Такого пользователя несуществует'; 
+        }
+
+    })
+</script>
