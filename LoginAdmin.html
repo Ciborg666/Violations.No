@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Вход в панель администратора</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Вход в панель администратора</h1>
+        <form id="form-container" >
+            <input type="text" placeholder="Логин" name="login" class="input-form">
+            <input type="password" placeholder="Пароль" name="password" class="input-form">
+            <button type="submit" class="button-container">Войти</button>
+        </form>
+        <div class="message" id="message"></div>
+    </div>
+</body>
+</html>
+<script>
+    document.getElementById('form-container').addEventListener('submit', function(event){
+        const login = document.querySelector('input[name="login"]').value.trim();
+        const password = document.querySelector('input[name="password"]').value.trim();
+        if(login === 'copp' && password === 'password'){
+        window.location.href = 'admin.html'
+    }
+    else{
+        document.getElementById('massage').textContent = 'Логин или пароль введен неверно';
+    }
+    })
+</script>
