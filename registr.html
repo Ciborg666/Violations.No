@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Регистрация</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Регистрация</h1>
+        <form id="form-container">
+            <input type="text" placeholder="Логин" name="login" class="input-form">
+            <input type="password" placeholder="Пароль" name="password" class="input-form">
+            <input type="text" placeholder="ФИО" name="fio" class="input-form">
+            <input type="tel" placeholder="Телефон" name="phone" class="input-form">
+            <input type="email" placeholder="Email" name="email" class="input-form">
+            <button type="submit" class="button-container">Зарегистрироваться</button>
+        </form>
+        <p>Уже есть акаунт.<a href="/login.html">Войти?</a></p>
+        <div class="message" id="message"></div>
+    </div>
+    <script>
+        document.getElementById('form-container').addEventListener('submit', function(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение формы
+
+            const login = document.querySelector('input[name="login"]').value.trim();
+            const password = document.querySelector('input[name="password"]').value.trim();
+            const fio = document.querySelector('input[name="fio"]').value.trim();
+            const phone = document.querySelector('input[name="phone"]').value.trim();
+            const email = document.querySelector('input[name="email"]').value.trim();
+
+            if (login !== '' && password !== '' && fio !== '' && phone !== '' && email !== '') {
+                const userData = { password, fio, phone, email };
+                localStorage.setItem(login, JSON.stringify(userData));
+                document.getElementById('message').textContent = 'Регистрация прошла успешно';
+                setTimeout(() => {
+                    window.location.href = 'login.html'; // Перенаправляем через 2 секунды
+                }, 2000);
+            } else {
+                document.getElementById('message').textContent = 'Пожалуйста, заполните все поля.';
+            }
+        });
+    </script>
+</body>
+</html>
