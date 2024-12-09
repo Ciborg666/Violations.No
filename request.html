@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Страница заявлений</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Ваши заявления</h1>
+        
+        <a href="index.html"><button id="new-request-button" class="button-container">Создать новое заявление</button></a>
+       
+        <ul id="list-request" class="list-request"></ul> 
+    </div>
+
+    <script>
+        // Функция для отображения заявок
+        function displayRequests() {
+            const requests = JSON.parse(localStorage.getItem('requests')) || []; 
+            const requestList = document.getElementById('list-request');
+            requestList.innerHTML = ''; // Очищаем текущий список
+
+            if (requests.length === 0) {
+                requestList.innerHTML = '<li>Нет заявок.</li>'; // Сообщение, если нет заявок
+            } else {
+                requests.forEach(request => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `ГОС номер: ${request.number}, Описание: ${request.description}, Статус: ${request.status}`;
+                    requestList.appendChild(listItem);
+                });
+            }
+        }
+
+
+        // Отображаем заявки при загрузке страницы
+        displayRequests();
+    </script>
+</body>
+</html>
